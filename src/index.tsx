@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { App } from './App';
 import { createServer, Model } from 'miragejs';
+import { App } from './App';
 
 createServer({
   models: {
-    transactions: Model,
+    transaction: Model,
   },
 
   seeds(server) {
@@ -13,38 +13,37 @@ createServer({
       transactions: [
         {
           id: 1,
-          title: 'Frella',
+          title: 'Venda da Bike',
           type: 'deposit',
-          category: 'Dev',
+          category: 'olx',
           amount: 6000,
           createdAt: new Date('2021-02-12 09:00:00'),
         },
         {
           id: 2,
-          title: 'Frella Front-End',
-          type: 'deposit',
-          category: 'Dev',
-          amount: 3000,
-          createdAt: new Date('2021-02-12 09:00:00'),
-        }
+          title: 'Aluguel',
+          type: 'withdraw',
+          category: 'Casa',
+          amount: 1000,
+          createdAt: new Date('2021-03-12 17:00:00'),
+        },
       ],
-    })
+    });
   },
 
   routes() {
     this.namespace = 'api';
 
     this.get('/transactions', () => {
-      return this.schema.all('transactions')
+      return this.schema.all('transaction');
     });
-    
+
     this.post('/transactions', (schema, request) => {
       const data = JSON.parse(request.requestBody);
-
-      return schema.create('trasanction', data);
-    })
-  }
-})
+      return schema.create('transaction', data);
+    });
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>
